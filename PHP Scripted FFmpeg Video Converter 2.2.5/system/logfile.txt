@@ -1,0 +1,5 @@
+2018-12-07 08:15:37 PHP Scripted FFmpeg Video Converter started.
+2018-12-07 08:15:37 No parameter set, using default settings file: settings.txt
+2018-12-07 08:15:37 Loading settings.
+2018-12-07 08:15:37 Unable to load settings file.
+2018-12-07 08:15:37 Terminating script.

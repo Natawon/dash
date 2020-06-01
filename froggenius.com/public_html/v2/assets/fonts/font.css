@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'CSPraJad';
+    src: url('CS_PraJad/CSPraJad.otf') format('opentype');
+}
+
+@font-face{
+    font-family: 'CSPraJad';
+    font-weight: bold;
+    src: url('CS_PraJad/CSPraJad-bold.otf') format('opentype');
+}
+
+@font-face{
+    font-family: 'Kanit';
+    src: url('Kanit/Kanit-Medium.ttf') format('truetype');
+}
+
+@font-face{
+    font-family: 'Kanit';
+    font-weight: bold;
+    src: url('Kanit/Kanit-Bold.ttf') format('truetype');
+}
+
+body,html {
+    font-family: 'Kanit';
+    /* font-size: 25px !important; */
+  }

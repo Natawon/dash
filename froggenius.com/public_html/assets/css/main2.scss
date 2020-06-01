@@ -1,0 +1,31 @@
+.come-in {
+  transform: translateY(250px);
+  animation: come-in 2s ease forwards;
+}
+
+.come-in:nth-child(odd) {
+    animation-duration: 1s;
+} 
+
+.come-in:nth-child(odd) {
+  animation-duration: 1s;
+}
+
+.already-visible {
+  transform: translateY(0);
+  animation: none;
+}
+  
+@keyframes come-in {
+  to { 
+    transform: translateY(0); 
+  }
+}
+  
+.cominscoll {
+  position: relative;
+  margin-bottom: 4%;
+  &:nth-child(even) {
+    margin-right: 0;
+  }
+}

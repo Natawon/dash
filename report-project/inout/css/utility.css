@@ -1,0 +1,129 @@
+/* Font */
+.f-11 {
+    font-size: 11px !important;
+}
+
+.f-12 {
+    font-size: 12px !important;
+}
+
+.f-13 {
+    font-size: 13px !important;
+}
+
+.f-14 {
+    font-size: 14px !important;
+}
+
+.f-16 {
+    font-size: 16px !important;
+}
+
+.f-18 {
+    font-size: 18px !important;
+}
+
+.f-20 {
+    font-size: 20px !important;
+}
+
+.f-24 {
+    font-size: 24px !important;
+}
+
+.f-32 {
+    font-size: 32px !important;
+}
+
+/* Cursor */
+.cs-default, .cs-default:hover {
+    cursor: default !important;
+}
+
+.cs-pointer, .cs-pointer:hover {
+    cursor: pointer !important;
+}
+
+footer i {
+    font-size: 24px;
+}
+
+
+/* Fix top */
+.top-1 {
+    top: 1px;
+}
+
+.top-4 {
+    position: relative;
+    top: 4px;
+}
+
+.top-6 {
+    position: relative;
+    top: 6px;
+}
+
+/* Height */
+.h-15 {
+    height: 15% !important;
+}
+
+.h-85 {
+    height: 85% !important;
+}
+
+/* Rounded */
+.rounded-top-left {
+    border-top-left-radius: .25rem!important;
+}
+
+/* Text indent */
+.text-indent-30 {
+    text-indent: 30px !important;
+}
+
+/* Text Style */
+.text-underline {
+    text-decoration: underline !important;
+}
+
+/* Z index */
+.z-index-0 {
+    z-index: 0 !important;
+}
+
+.z-index-1030 {
+    z-index: 1030 !important;
+}
+
+/* Background */
+.bg-black {
+    background-color: #000 !important;
+}
+
+.bg-eee {
+    background-color: #eee !important;
+}
+
+/* Typography */
+h1 {
+    font-size: 1.5rem;
+}
+
+.underline-none:hover {
+    text-decoration: none;
+}
+
+/* Text Color */
+.text-gray-61 {
+    color: #616161 !important;
+}
+
+.text-indent-40 {
+    text-indent: 40px;
+}
+
+.w-100px {
+    width: 100px;
+}

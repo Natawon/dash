@@ -1,0 +1,162 @@
+<div class="header">
+    <h2><i class="icon-users"></i> Administrator <strong>{{mode}}</strong></h2>
+    <div class="breadcrumb-wrapper">
+        <ol class="breadcrumb">
+            <li><a href="/#admins">Administrator</a></li>
+            <li class="active">{{mode}}</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title"><strong>Administrator {{mode}}</strong> to our system</h2>
+            </div>
+            <div class="panel-content">
+                <div class="row">
+                    <form class="form-horizontal" ng-submit="submitAdmins(admins_data)">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-2">Username</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="text" minlength="6" placeholder="Minimum 6 characters..." ng-model="admins_data.username" required>
+                                    <i class="icon-lock"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Password</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="password" placeholder="Between 4 and 16 characters" minlength="4" maxlength="16" ng-model="admins_data.password" required>
+                                    <i class="icon-lock"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">First name</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="text" placeholder="Enter your first name..." ng-model="admins_data.first_name" required>
+                                    <i class="icon-user"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Last name</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="text" placeholder="Enter your last name..." ng-model="admins_data.last_name" required>
+                                    <i class="icon-user"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Email</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="email" placeholder="Enter your email..." ng-model="admins_data.email" required>
+                                    <i class="icon-envelope"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Mobile number</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="text" placeholder="Mobile Number..." ng-model="admins_data.mobile" required>
+                                    <i class="icon-screen-smartphone"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Telephone number</label>
+                                <div class="col-sm-9 prepend-icon">
+                                    <input class="form-control form-white" type="text" placeholder="Telephone Number..." ng-model="admins_data.phone" required>
+                                    <i class="icon-call-end"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Address</label>
+                                <div class="col-sm-9">
+                                    <textarea rows="5" class="form-control form-white" placeholder="Write your address... (minimum 30 characters)" ng-model="admins_data.address"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Picture <span class="label label-danger">size 64px * 64px</span></label>
+                                <div class="col-sm-9">
+                                    <div ng-controller='adminsUploadCtrl' nv-file-drop="" uploader="img_uploader" filters="queueLimit, customFilter">
+                                        <a ng-if="admins_data.avatar" ng-href="{{base_admins_avatar}}{{admins_data.avatar}}" target="_blank"><img ng-src="{{base_admins_avatar}}{{admins_data.avatar}}"></a>
+                                        <br>
+                                        <input type="file" class="form-control" nv-file-select="" uploader="img_uploader" />
+                                        <table class="table">
+                                            <tbody>
+                                            <tr ng-repeat="item in img_uploader.queue">
+                                                <td width="20%"><strong>{{ item.file.name }}</strong></td>
+                                                <td width="10%" ng-show="img_uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                <td width="30%" ng-show="img_uploader.isHTML5">
+                                                    <div class="progress" style="margin-bottom: 0;">
+                                                        <div class="progress-bar progress-striped bg-color-greenLight" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                                </td>
+                                                <td nowrap>
+                                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Group Administrator</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" ng-model="admins_data.admins_groups_id" ng-options="admin_group.id as admin_group.title for admin_group in admins_groups track by admin_group.id" >
+                                        <option value="">-- Select Group Administrator --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2">Status</label>
+                                <div class="col-sm-9">
+                                    <div class="onoffswitch2">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="statusOnOffSwitch{{admins_data.id}}" ng-click="toggleStatus(admins_data)" ng-checked="admins_data.status==1">
+                                        <label class="onoffswitch-label" for="statusOnOffSwitch{{admins_data.id}}">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-embossed btn-success">Save</button>
+                                    <a href="#admins" class="btn btn-embossed btn-default">Cancel</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

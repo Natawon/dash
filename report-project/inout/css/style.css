@@ -1,0 +1,37 @@
+#attendance-schedule-body {
+
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+	color: #29377d !important;
+}
+
+
+.attendance-items {
+	width: 20px;
+	height: 20px;
+}
+
+.bg-leave {
+	background-color: #ffd54f !important;
+}
+
+.col-xxl-1, .col-xxl-2, .col-xxl-3, .col-xxl-4, .col-xxl-5, .col-xxl-6, .col-xxl-7, .col-xxl-8, .col-xxl-9, .col-xxl-10, .col-xxl-11, .col-xxl-12 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.btn-filter-come-status:hover, .btn-filter-come-status.active {
+    background-color: #eee;
+}
+
+.btn-filter-come-status:focus, .btn-filter-come-status.focus {
+    box-shadow: none !important;
+}
+
+
+.btn-filter-come-status {
+    border-radius: .25rem !important;
+}

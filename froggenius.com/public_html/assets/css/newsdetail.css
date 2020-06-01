@@ -1,0 +1,56 @@
+.container .pt-5{ font-family: Montserrat,sans-serif; font-weight: 400 !important; }
+h1 { font-size:47px; font-weight: 400 !important; }
+@media(max-width:768px){
+    h1{font-size: 27px}
+}
+.col-12 ul li{ font-family: 'Kanit'; font-weight: 300; }
+.post-tag { display: inline-block; font-family: Montserrat,sans-serif; text-transform: uppercase;color: #a7b0b4; padding: 5px 18px; background: #eceff1; border-radius: 40px; font-size: 12px; }
+.post-tag:hover{ background:#57a7f0; color:#ffffff !important; }
+.meta { padding-right:30px; }
+
+.nav-link.disabled {
+    color: #6c757d !important;
+}
+
+.divtop{
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.titletext{
+    max-width:100%; word-wrap:break-word;
+}
+
+.contentnews{
+    max-width:100%;padding:10px;
+}
+
+.contentimg{
+    max-width:100%;width:900px;
+}
+
+h2 {font-family: 'Kanit'; font-size:30px; font-weight: 400 !important; }
+
+.basethumb{
+    font-family: 'Kanit';
+    font-weight: 300;
+}
+
+.pdle-20{
+    padding-left: 20px;
+}
+
+.basethumb{
+    display: block;
+    padding-left:0px !important; 
+    padding-right:1rem;
+}
+
+.contentnews p{
+    font-family: 'Trirong', serif !important;
+}
+.contentnews ul{
+    font-family: 'Trirong', serif !important;
+}
+.contentnews li{
+    font-family: 'Trirong', serif !important;
+}

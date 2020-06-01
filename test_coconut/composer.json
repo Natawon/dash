@@ -1,0 +1,5 @@
+{
+    "require": {
+        "opencoconut/coconut": "2.*"
+    }
+}

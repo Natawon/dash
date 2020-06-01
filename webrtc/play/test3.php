@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <video
+    id="video-active"
+    class="video-active"
+    width="640"
+    height="390"
+    controls="controls">
+    <source src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+</video>
+<div id="current">0:00</div>
+<div id="duration">0:00</div>
+
+<?php 
+echo '<div id="current">0:00</div>';
+?>
+
+<script>
+$(document).ready(function(){
+  $("#video-active").on(
+    "timeupdate", 
+    function(event){
+      onTrackedVideoFrame(this.currentTime, this.duration);
+      
+    });
+});
+
+function onTrackedVideoFrame(currentTime, duration){
+    
+    $("#current").text(currentTime); //Change #current to currentTime
+//   console.log(currentTime);
+    if(currentTime % 5 ==0){
+        //   console.log(currentTime);
+     }
+     console.log(currentTime);
+
+    // $("#duration").text(duration)
+}
+
+// var secondvideo = document.getElementById('video-active');
+// secondvideo.addEventListener('play', function(e) { 
+//     // The video is playing
+//     console.log("current time= "+ document.getElementById('video-active').currentTime);
+
+// });
+</script>
+</body>
+</html>

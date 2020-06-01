@@ -1,0 +1,107 @@
+<div class="header">
+    <h2><i class="icon-fire"></i> Presentations <strong>List</strong></h2>
+    <div class="breadcrumb-wrapper">
+        <ol class="breadcrumb">
+            <li class="active">Presentations</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xlg-12 col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa fa-table"></i> <strong>Presentations List</strong> tables</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="col-lg-6 p-l-0">
+                            <div class="m-b-20">
+                                <div class="btn-group">
+                                    <a href="#presentations/create" id="table-edit_new" class="btn btn-embossed btn-primary"><i class="fa fa-plus"></i> Create New Presentations</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-r-0">
+                            <form class="frm-filter">
+                                <div class="form-group m-b-10">
+                                    <div class="col-sm-12 p-0 append-icon">
+                                        <input type="text" id="finder" class="form-control form-white" placeholder="ค้นหา..." autofocus="" name="search" ng-model="search" ng-change="changeFilter()">
+                                        <i class="icon-magnifier"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="filter-left">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="id">
+                                        <a ng-click="sort_by('id')"><i class="fa fa-sort"></i></a>#
+                                    </th>
+                                    <th class="title">
+                                        <a ng-click="sort_by('title')"><i class="fa fa-sort"></i></a>Title
+                                    </th>
+                                    <th class="link">
+                                        <a ng-click="sort_by('link')"><i class="fa fa-sort"></i></a>Link
+                                    </th>
+                                    <th class="file">
+                                        <a ng-click="sort_by('file')"><i class="fa fa-sort"></i></a>File
+                                    </th>
+                                    <th class="order">
+                                        <a ng-click="sort_by('order')"><i class="fa fa-sort"></i></a>Order
+                                    </th>
+                                    <th class="status">
+                                        <a ng-click="sort_by('status')"><i class="fa fa-sort"></i></a>Status
+                                    </th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody ui-sortable="sortableOptions" ng-model="presentations">
+                                <tr ng-repeat="presentations_data in presentations" data-id="{{presentations_data.id}}">
+                                    <td>{{presentations_data.id}}</td>
+                                    <td>
+                                        <a ng-href="#presentations/{{presentations_data.id}}/edit">{{presentations_data.title}}</a><br>
+                                        <label class="label label-default" ng-if="presentations_data.modify_by!=''" ><i class="icon-user"></i><strong>{{presentations_data.modify_by}}</strong> ({{presentations_data.modify_datetime}})</label>
+                                    </td>
+                                    <td align="center">
+                                        <a ng-if="presentations_data.type == 'link'" ng-href="{{presentations_data.link}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-link"></i></a>
+                                        <span ng-if="presentations_data.type != 'link'">-</span>
+                                    </td>
+                                    <td align="center">
+                                        <a ng-if="presentations_data.type == 'file'" ng-href="{{base_presentations_file}}{{presentations_data.file}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file-text-o"></i></a>
+                                        <span ng-if="presentations_data.type != 'file'">-</span>
+                                    </td>
+                                    <td>
+                                        <input style="width: 70px; text-align: center;" class="form-control form-white" type="text" ng-model="presentations_data.order" ng-blur="sortOrder(presentations_data)" ng-focus="disableSortable()">
+                                    </td>
+                                    <td>
+                                        <div class="onoffswitch2">
+                                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="statusOnOffSwitch{{presentations_data.id}}" ng-click="updateStatus(presentations_data)" ng-checked="presentations_data.status==1">
+                                            <label class="onoffswitch-label" for="statusOnOffSwitch{{presentations_data.id}}">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><a class="btn btn-sm btn-primary icon icon-note" ng-href="#presentations/{{presentations_data.id}}/edit"></a></td>
+                                    <td><a class="delete btn btn-sm btn-danger icon icon-trash" ng-click="deletePresentations(presentations_data)"></a></td>
+                                </tr>
+                                </tbody>
+                                <tfoot class="tbl-footer">
+                                <td colspan="9">
+                                    <div class="pull-left" style="padding-top:1.5em;">Total: <b>{{total}}</b> record(s)</div>
+                                    <div class="pull-right">
+                                        <pagination total-items="total" ng-model="current_page" items-per-page="per_page" num-pages="last_page" class="pagination pagination-alt" boundary-links="true" max-size="max_size" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                    </div>
+                                </td>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+/vendor
+/mail
+/bower_components
+/backend/bower_components
+/backend/assets/global/plugins
+.idea
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+sftp-config.json

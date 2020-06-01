@@ -1,0 +1,647 @@
+<html>
+<head>
+<title>frogdigital work</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<style>
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  text-align: center;
+}
+
+h4{
+    /* margin-left:10%; */
+
+}
+.d1{
+    width:10%;
+    display: inline-block;
+    /* background: linear-gradient(#608F30, #456D2C); */
+    float : left;
+    color:white;
+    margin:-20% 65%;
+    /* border: 1px solid rgba(189, 195, 199,0.6); */
+
+}
+.d2{
+    width:10%;
+    display: inline-block;
+    /* background: linear-gradient(#CC0000, #A30000); */
+    float : left;
+    color:white;
+    margin:-20% 70%;
+    /* border: 1px solid rgba(189, 195, 199,0.6); */
+
+}
+.d3{
+    width:10%;
+    display: inline-block;
+    /* background: linear-gradient(#CCCC00, #FFFF5C); */
+    float : left;
+    color:white;
+    margin:-35.2% 75%;
+    /* border: 1px solid rgba(189, 195, 199,0.6); */
+
+}
+/* .d4{
+    width:10%;
+    display: inline-block;
+    background: linear-gradient(#CC0000, #A30000);
+    float : left;
+    color:white;
+    margin:-28% 90%;
+    border: 1px solid rgba(189, 195, 199,0.6);
+
+} */
+p{
+    /* width:30%;
+    /* background-color:red; */
+    /* float : left;
+    margin:-23.5% 60%; */ 
+    font-size:150%;
+    text-align:center;
+
+}
+/* Firefox old*/
+@-moz-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+
+@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+/* IE */
+@-ms-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+/* Opera and prob css3 final iteration */
+@keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+.blink-image {
+    -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+    -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+    -ms-animation: blink normal 2s infinite ease-in-out; /* IE */
+    animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}
+/* i{
+    color:black;
+} */
+</style>
+</head>
+<body>
+<?php
+  // header("Refresh:0");
+
+$conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+
+if(isset($_GET['delete_id']))
+  {
+    
+    
+    // it will delete an actual record from db
+    $stmt_delete = $conn->prepare('DELETE FROM stock WHERE id =:id');
+    $stmt_delete->bindParam(':id',$_GET['delete_id']);
+    $stmt_delete->execute();
+    
+  }
+// $sth = $conn->prepare("SELECT id, name, date_starts, date_expire, DATEDIFF(date_expire, date_starts) as ddiff FROM stock order by 'id', ddiff ");
+// $sth->execute();
+
+$sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2
+FROM employee
+WHERE TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 > 1 order by ddiff ASC");
+$conn->query('SET NAMES utf8');
+
+$sth->execute();
+?>
+
+ <div class="navbar navbar-default" role="navigation">
+  
+ <img src="img/logo-frog.png" alt="" style='margin:1% 2%;' height='80' width='120'>
+<h1 style="text-align: center; margin-top:-4%;">ตารางการเข้างาน </h1>
+<div class="col-md-12">
+  <div style="float: right;">
+   <!-- <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#myModal">เพิ่มรายการ</button> -->
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <!-- <h4 class="modal-title">STATUS LATE</h4> -->
+        </div>
+<div class="modal-body">
+
+        
+</div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>วันที่</th>
+                 <th>ชื่อ</th>
+                 <th>แผนก</th>
+                 <th width='10%'>เวลาเข้างาน</th>
+                 <th>สถานะ</th>
+                 <th>NOTE</th>
+
+
+
+
+
+               
+                
+                
+                <!-- <th>แก้ไข</th>
+                <th>ลบ</th> -->
+           </tr>
+        </thead>
+        <tbody>
+            <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+             
+             
+             
+            <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $row['InOutDate'];?></td>
+                <td><?php echo $row['EmployeeName'];?></td>
+                <td><?php echo $row['EmpDeptName'];?></td>
+                <td><?php echo $row['InTime'];?></td>
+                <!-- <td><?php echo  SUBSTR($row['ddiff2'],0,9);?></td> -->
+                <td><?php if($row['ddiff'] > 1){
+                        echo "<img class='blink-image' src='img/logo.png' height='42' width='42'>";
+                      }elseif($row['Note'] =="ขาดงาน" && $row['InTime'] =="-" ){
+ 
+                  }elseif($row['InTime'] =="-" ){
+                    echo "<font color=\"blue\">ลางาน</font>"; //เราก็เพียงใช้คำสั่ง Font
+
+                  }
+                  else {
+                        echo "<font color=\"green\"><img class='blink-image' src='img/icon.png' height='42' width='42'></font>";
+                  }?></td>
+
+                <td><?php echo $row['Note'];?></td>
+
+
+
+
+               
+                
+            </tr>
+
+            
+
+           
+
+<?php
+ }  
+   $sum += $i;
+
+  ?>
+
+<hr>
+<h4 class="modal-title">STATUS LATE</h4>
+
+<?php
+  // header("Refresh:0");
+
+$conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+
+if(isset($_GET['delete_id']))
+  {
+    
+    
+    // it will delete an actual record from db
+    $stmt_delete = $conn->prepare('DELETE FROM stock WHERE id =:id');
+    $stmt_delete->bindParam(':id',$_GET['delete_id']);
+    $stmt_delete->execute();
+    
+  }
+// $sth = $conn->prepare("SELECT id, name, date_starts, date_expire, DATEDIFF(date_expire, date_starts) as ddiff FROM stock order by 'id', ddiff ");
+// $sth->execute();
+
+$sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2
+FROM employee
+WHERE TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 <= 00 order by ddiff ASC LIMIT 3");
+$conn->query('SET NAMES utf8');
+
+$sth->execute();
+?>
+ 
+<div class="col-md-12">
+  <div style="float: right;">
+   <!-- <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#myModal">เพิ่มรายการ</button> -->
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <h4 class="modal-title">STATUS LATE</h4>
+        </div>
+<div class="modal-body">
+
+        
+</div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>วันที่</th>
+                 <th>ชื่อ</th>
+                 <th>แผนก</th>
+                 <th width='10%'>เวลาเข้างาน</th>
+                 <th>สถานะ</th>
+                 <th>NOTE</th>
+
+
+
+
+
+               
+                
+                
+                <!-- <th>แก้ไข</th>
+                <th>ลบ</th> -->
+           </tr>
+        </thead>
+        <tbody>
+            <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+             
+             
+             
+            <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $row['InOutDate'];?></td>
+                <td><?php echo $row['EmployeeName'];?></td>
+                <td><?php echo $row['EmpDeptName'];?></td>
+                <td><?php echo $row['InTime'];?></td>
+                <!-- <td><?php echo  SUBSTR($row['ddiff2'],0,9);?></td> -->
+                <td><?php if($row['ddiff'] > 1){
+                        echo "<img class='blink-image' src='img/logo.png' height='42' width='42'>";
+                      }elseif($row['Note'] =="ขาดงาน" && $row['InTime'] =="-" ){
+ 
+                  }elseif($row['InTime'] =="-" ){
+                    echo "<font color=\"blue\">ลางาน</font>"; //เราก็เพียงใช้คำสั่ง Font
+
+                  }
+                  else {
+                        echo "<font color=\"green\"><img class='blink-image' src='img/icon.png' height='42' width='42'></font>";
+                  }?></td>
+
+                <td><?php echo $row['Note'];?></td>
+
+
+
+
+               
+                
+            </tr>
+
+            
+
+           
+
+<?php
+ }  
+   $sum2 += $i;
+  ?>
+             <br>
+             <div class="d1">
+             <?php 
+             $conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+             $sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2 ,COUNT(id) as total
+             FROM employee
+             WHERE TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 <= 00 order by ddiff ASC ");
+             $conn->query('SET NAMES utf8');
+             
+             $sth->execute();
+
+
+             ?>
+                      <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+              <!-- <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal3"><?php echo $row['total'];?></button> -->
+              <!-- <i class="fas fa-mouse"></i><button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal1"><?php echo $row['total'];?></button> -->
+              <button type="button" class="btn btn-success btn-lg" onclick="modalWin()"><?php echo $row['total'];?></button>
+
+            <?php
+               }  
+                 $sum3 += $i;
+              ?>
+             <!-- <p> <?php echo $sum + $sum2;?></p> -->
+             <!-- <p> <?php echo $sum2;?></p> -->
+             <!-- <button type="button" class="btn btn-success btn-lg" onclick="modalWin()"><?php echo $sum2;?></button> -->
+
+
+
+             </div>
+             <div class="d2">
+             <?php 
+             $conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+             $sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2 ,COUNT(id) as total
+             FROM employee
+             WHERE TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 > 1 order by ddiff ASC ");
+             $conn->query('SET NAMES utf8');
+             
+             $sth->execute();
+
+
+             ?>
+                      <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+              <!-- <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal3"><?php echo $row['total'];?></button> -->
+              <i class="fas fa-mouse"></i><button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal1"><?php echo $row['total'];?></button>
+
+            <?php
+               }  
+                 $sum3 += $i;
+              ?>
+             <!-- <p> <?php echo $sum3 + $sum2;?></p> -->
+             <!-- <p> <?php echo $sum3;?></p> -->
+             <!-- <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal3"><?php echo $sum3;?></button> -->
+
+             <!-- <p> <?php echo $sum + $sum2;?></p> -->
+             <!-- <p> <?php echo $sum;?></p> -->
+             <!-- <i class="fas fa-mouse"></i><button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal1"><?php echo $sum;?></button> -->
+
+             </div>
+             
+            
+             <h4 class="modal-title">STATUS COME EARLY</h4>
+
+
+
+
+             <?php
+  // header("Refresh:0");
+
+$conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+
+if(isset($_GET['delete_id']))
+  {
+    
+    
+    // it will delete an actual record from db
+    $stmt_delete = $conn->prepare('DELETE FROM stock WHERE id =:id');
+    $stmt_delete->bindParam(':id',$_GET['delete_id']);
+    $stmt_delete->execute();
+    
+  }
+// $sth = $conn->prepare("SELECT id, name, date_starts, date_expire, DATEDIFF(date_expire, date_starts) as ddiff FROM stock order by 'id', ddiff ");
+// $sth->execute();
+
+$sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2
+FROM employee
+WHERE InTime = '-' order by ddiff ASC");
+$conn->query('SET NAMES utf8');
+
+$sth->execute();
+?>
+ 
+<div class="col-md-12">
+  <div style="float: right;">
+   <!-- <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#myModal">เพิ่มรายการ</button> -->
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <h4 class="modal-title">STATUS LATE</h4>
+        </div>
+<div class="modal-body">
+
+        
+</div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>วันที่</th>
+                 <th>ชื่อ</th>
+                 <th>แผนก</th>
+                 <th width='10%'>เวลาเข้างาน</th>
+                 <th>สถานะ</th>
+                 <th>NOTE</th>
+
+
+
+
+
+               
+                
+                
+                <!-- <th>แก้ไข</th>
+                <th>ลบ</th> -->
+           </tr>
+        </thead>
+        <tbody>
+            <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+             
+             
+             
+            <tr>
+                <td><?php echo $i;?></td>
+                <td><?php echo $row['InOutDate'];?></td>
+                <td><?php echo $row['EmployeeName'];?></td>
+                <td><?php echo $row['EmpDeptName'];?></td>
+                <td><?php echo $row['InTime'];?></td>
+                <!-- <td><?php echo  SUBSTR($row['ddiff2'],0,9);?></td> -->
+                <td><?php if($row['ddiff'] > 1){
+                        echo "<img class='blink-image' src='img/logo.png' height='42' width='42'>";
+                      }elseif($row['Note'] =="ขาดงาน" && $row['InTime'] =="-" ){
+ 
+                  }elseif($row['InTime'] =="-" ){
+                    echo "<img class='blink-image' src='img/leave.png' height='42' width='42'>"; //เราก็เพียงใช้คำสั่ง Font
+
+                  }
+                  else {
+                        echo "<font color=\"green\"><img class='blink-image' src='img/icon.png' height='42' width='42'></font>";
+                  }?></td>
+
+                <td><?php echo $row['Note'];?></td>
+
+
+
+
+               
+                
+            </tr>
+
+            
+
+           
+
+<?php
+ }  
+   $sum3 += $i;
+  ?>
+             <br>
+             <div class="d3">
+             <?php 
+             $conn  = new PDO("mysql:host=monitor2.open-cdn.com;dbname=employee", "root", "dootvazws3e");   
+             $sth = $conn->prepare("SELECT id, EmployeeName,EmpDeptName,Note, InOutDate, InTime ,TIME_TO_SEC(SUBTIME(InTime,'8:30:00'))/60 as ddiff ,timediff(InTime,'8:30:00') as ddiff2 ,COUNT(id) as total
+             FROM employee
+             WHERE InTime = '-' order by ddiff ASC");
+             $conn->query('SET NAMES utf8');
+             
+             $sth->execute();
+
+
+             ?>
+                      <?php 
+// เช็ควัน    
+            $i=0;
+            while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+               $i++;
+             ?>
+              <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal3"><?php echo $row['total'];?></button>
+
+            <?php
+               }  
+                 $sum3 += $i;
+              ?>
+             <!-- <p> <?php echo $sum3 + $sum2;?></p> -->
+             <!-- <p> <?php echo $sum3;?></p> -->
+             <!-- <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal3"><?php echo $sum3;?></button> -->
+
+             </div>
+             <h4 class="modal-title">STATUS LEAVE</h4>
+
+
+<!-- <img class="blink-image" src="img/logo.png" height='42' width='42'> -->
+<!-- Modal -->
+<div class="container">
+  
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<script>
+ function modalWin(){
+  if (window.showModalDialog){
+     window.showModalDialog("http://monitor2.open-cdn.com:8001/inout/select.php", "_blank","dialog name",
+         "dialogWidth:500px;dialogHeight:700px");
+  } 
+  else{
+    window.open('http://monitor2.open-cdn.com:8001/inout/select.php','dialog name',
+      'height=500,width=700,toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no ,modal=yes');
+  }
+      }
+</script>
+
+  
+</body>
+</html>
